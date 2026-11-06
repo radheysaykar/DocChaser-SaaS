@@ -6,9 +6,10 @@ import Link from 'next/link';
 
 async function getSupabaseClient() {
   const cookieStore = await cookies();
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
+  
+  const supabaseUrl = (process.env.NEXT_PUBLIC_SUPABASE_URL || '').replace(/[^\x00-\x7F]/g, '').trim();
+  const supabaseKey = (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '').replace(/[^\x00-\x7F]/g, '').trim();
+  
   if (!supabaseUrl || !supabaseKey) {
     throw new Error('Missing Supabase Environment Variables');
   }
